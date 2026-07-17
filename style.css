@@ -404,7 +404,8 @@ main {
   color: var(--muted);
 }
 
-/* Home footer is breathing room only: no border, no text. */
+/* Home footer keeps its breathing room: no border, single centered line. */
 .page-home .site-footer {
   border-top: none;
+  justify-content: center;
 }
