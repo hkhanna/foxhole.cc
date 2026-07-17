@@ -14,6 +14,17 @@
   --side: clamp(32px, 12vw, 200px);
 }
 
+/* The What and Talk pages sit within wider margins for a calmer, more
+   editorial measure (à la opi.us). Overriding --side keeps the nav,
+   content, and footer gutters aligned. Desktop-up only, so narrow
+   screens keep their tighter gutters. */
+@media (min-width: 800px) {
+  .page-what,
+  .page-talk {
+    --side: clamp(120px, 16vw, 300px);
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -105,6 +116,22 @@ a:hover {
 
 .nav-links a.nav-talk:hover {
   color: var(--rust-hover);
+}
+
+/* On narrow screens the full wordmark and the links no longer fit on one
+   line together, so the wordmark wraps mid-name; stack them instead. */
+@media (max-width: 560px) {
+  .site-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  /* Home and 404 keep the wordmark hidden; drop it from the flow so it
+     doesn't leave an empty line above the links. */
+  .page-home .wordmark {
+    display: none;
+  }
 }
 
 /* CTA pattern (every page) */
