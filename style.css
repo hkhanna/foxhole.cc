@@ -14,14 +14,14 @@
   --side: clamp(32px, 12vw, 200px);
 }
 
-/* The What and Talk pages sit within wider margins for a calmer, more
-   editorial measure (à la opi.us). Overriding --side keeps the nav,
-   content, and footer gutters aligned. Desktop-up only, so narrow
+/* The What and Talk pages use opi.us's gutters (6vw, capped at 6rem)
+   for a calmer, more editorial measure. Overriding --side keeps the
+   nav, content, and footer gutters aligned. Desktop-up only, so narrow
    screens keep their tighter gutters. */
 @media (min-width: 800px) {
   .page-what,
   .page-talk {
-    --side: clamp(120px, 16vw, 300px);
+    --side: clamp(24px, 6vw, 96px);
   }
 }
 
