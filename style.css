@@ -362,6 +362,7 @@ main {
 
 .who-portrait {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
