@@ -110,14 +110,6 @@ a:hover {
   color: var(--cream);
 }
 
-.nav-links a.nav-talk {
-  color: var(--rust);
-}
-
-.nav-links a.nav-talk:hover {
-  color: var(--rust-hover);
-}
-
 /* On narrow screens the full wordmark and the links no longer fit on one
    line together, so the wordmark wraps mid-name; stack them instead. */
 @media (max-width: 560px) {
@@ -231,7 +223,7 @@ main {
   font-size: clamp(16px, 1.5vw, 19px);
   line-height: 1.7;
   margin: clamp(20px, 3vh, 32px) 0 0;
-  max-width: 58ch;
+  max-width: 65ch;
   color: var(--body-what);
 }
 
@@ -274,7 +266,7 @@ main {
   flex-direction: column;
   gap: 16px;
   margin-top: clamp(24px, 4vh, 40px);
-  max-width: 60ch;
+  max-width: 67ch;
 }
 
 .answer p {
