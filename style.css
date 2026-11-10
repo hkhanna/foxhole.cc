@@ -1,424 +1,120 @@
-/* Foxhole Partners — foxhole.cc */
+/* Foxhole Partners — foxhole.cc
+   Single page. Source design: foxhole-homepage-preview_1.html */
 
 :root {
-  --slate: #2c3b46;
-  --cream: #efe6d6;
-  --body-who: #e4dccd;
-  --body-what: #cbc3b4;
-  --muted: #93a0a6;
+  --navy: #2b3a45;
+  --cream: #ece5d8;
   --rust: #c47a5d;
-  --rust-hover: #d99878;
-  --rule: rgba(239, 230, 214, 0.16);
-  --rule-footer: rgba(239, 230, 214, 0.1);
-  --cta-underline: rgba(239, 230, 214, 0.28);
-  --side: clamp(32px, 12vw, 200px);
+  --rule: rgba(236, 229, 216, 0.35);
 }
 
-/* The What and Talk pages use opi.us's gutters (6vw, capped at 6rem)
-   for a calmer, more editorial measure. Overriding --side keeps the
-   nav, content, and footer gutters aligned. Desktop-up only, so narrow
-   screens keep their tighter gutters. */
-@media (min-width: 800px) {
-  .page-what,
-  .page-talk {
-    --side: clamp(24px, 6vw, 96px);
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html {
-  background: var(--slate);
-  color-scheme: dark;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  background: var(--slate);
+  background: var(--navy);
   color: var(--cream);
-  font-family: 'Schibsted Grotesk', sans-serif;
+  font-family: 'Source Serif 4', Georgia, serif;
   -webkit-font-smoothing: antialiased;
 }
 
-::selection {
-  background: var(--cream);
-  color: var(--slate);
-}
+::selection { background: var(--cream); color: var(--navy); }
 
-a {
-  color: var(--cream);
-}
+a { color: var(--cream); }
+a:hover { color: #ffffff; }
 
-a:hover {
-  color: var(--rust);
-}
-
-/* Nav (shared) */
-
-.site-nav {
+.wrap {
+  box-sizing: border-box;
+  min-height: 100vh;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 34px var(--side);
+  flex-direction: column;
+  padding: 0 24px;
 }
 
-.wordmark {
-  font-family: 'Newsreader', serif;
-  font-weight: 400;
-  font-size: 21px;
-  letter-spacing: -0.01em;
-  color: var(--cream);
-  text-decoration: none;
-  transition: color .25s ease;
-}
+/* Hero */
+.hero { text-align: center; padding: 108px 0 0; }
+.hero h1 { margin: 0; font-size: 72px; line-height: 1.05; font-weight: 400; }
+.hero p { margin: 28px 0 0; font-size: 19px; font-style: italic; opacity: 0.7; }
 
-.wordmark:hover {
-  color: var(--rust);
-}
-
-/* On the homepage the giant H1 is right below, so the wordmark stays hidden. */
-.page-home .wordmark {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.nav-links {
+/* Statement + service menu */
+.split {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 100px 0 24px;
   display: flex;
-  gap: clamp(22px, 3vw, 40px);
-  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 56px;
+  align-items: flex-start;
 }
-
-.nav-links a {
-  font-size: 12.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--muted);
-  transition: color .25s ease;
-}
-
-.nav-links a:hover,
-.nav-links a[aria-current="page"] {
-  color: var(--cream);
-}
-
-/* On narrow screens the full wordmark and the links no longer fit on one
-   line together, so the wordmark wraps mid-name; stack them instead. */
-@media (max-width: 560px) {
-  .site-nav {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
-  }
-
-  /* Home and 404 keep the wordmark hidden; drop it from the flow so it
-     doesn't leave an empty line above the links. */
-  .page-home .wordmark {
-    display: none;
-  }
-}
-
-/* CTA pattern (every page) */
+.statement { flex: 1 1 320px; min-width: 0; }
+.statement p { margin: 0; font-size: 29px; line-height: 1.42; }
+.statement .accent { color: var(--rust); }
 
 .cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+  display: inline-block;
+  margin-top: 40px;
+  color: var(--rust);
   font-size: 13px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--cream);
+  border-bottom: 1px solid rgba(196, 122, 93, 0.55);
   padding-bottom: 6px;
-  border-bottom: 1px solid var(--cta-underline);
-  transition: border-color .3s ease, color .3s ease;
 }
 
-.cta:hover {
-  color: var(--rust);
-  border-bottom-color: var(--rust);
-}
-
-.cta .arrow {
-  font-family: 'Newsreader', serif;
-  font-size: 16px;
-  letter-spacing: 0;
-}
-
-/* Page scaffolding */
-
-main {
-  flex: 1;
+.menu { flex: 1.15 1 380px; min-width: 0; }
+.row { border-top: 1px solid var(--rule); }
+.row:last-child { border-bottom: 1px solid var(--rule); }
+.row h3 { margin: 0; font: inherit; }
+.row button {
   display: flex;
-  flex-direction: column;
-}
-
-.page {
-  padding: clamp(32px, 7vh, 88px) var(--side) clamp(40px, 8vh, 96px);
-}
-
-.page-label {
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--rust);
-  margin: 0 0 clamp(24px, 4vh, 44px);
-}
-
-/* Home */
-
-.home-main {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 6vh var(--side) 14vh;
-}
-
-.home-title {
-  font-family: 'Newsreader', serif;
-  font-weight: 400;
-  font-size: clamp(52px, 12vw, 196px);
-  line-height: 0.96;
-  letter-spacing: -0.025em;
-  margin: 0;
-  color: var(--cream);
-}
-
-.home-tagline {
-  font-family: 'Newsreader', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(19px, 2.2vw, 27px);
-  margin: clamp(24px, 4vh, 40px) 0 0;
-  color: var(--muted);
-}
-
-.home-main .cta {
-  margin-top: clamp(30px, 4.5vh, 52px);
-}
-
-/* What */
-
-.what-headline {
-  font-family: 'Newsreader', serif;
-  font-weight: 400;
-  font-size: clamp(30px, 4.6vw, 62px);
-  line-height: 1.12;
-  letter-spacing: -0.015em;
-  margin: 0;
-  max-width: 29ch;
-  color: var(--cream);
-  text-wrap: balance;
-}
-
-.what-intro {
-  font-size: clamp(16px, 1.5vw, 19px);
-  line-height: 1.7;
-  margin: clamp(20px, 3vh, 32px) 0 0;
-  max-width: 78ch;
-  color: var(--body-what);
-}
-
-.what-lead-in {
-  font-family: 'Newsreader', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(20px, 2.4vw, 28px);
-  line-height: 1.4;
-  margin: clamp(24px, 4vh, 40px) 0 0;
-  color: var(--rust);
-}
-
-.questions {
-  margin-top: clamp(28px, 4vh, 44px);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(24px, 4vh, 44px);
-  max-width: 984px;
-}
-
-.question {
-  border-top: 1px solid var(--rule);
-  padding-top: clamp(24px, 4vh, 40px);
-}
-
-.question h2 {
-  font-family: 'Newsreader', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(24px, 3.2vw, 38px);
-  line-height: 1.25;
-  margin: 0;
-  color: var(--cream);
-  max-width: 38ch;
-}
-
-.answer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: clamp(24px, 4vh, 40px);
-  max-width: 80ch;
-}
-
-.answer p {
-  font-size: clamp(15.5px, 1.4vw, 17.5px);
-  line-height: 1.7;
-  margin: 0;
-  color: var(--body-what);
-}
-
-.what-closing {
-  margin-top: clamp(56px, 9vh, 112px);
-  border-top: 1px solid var(--rule);
-  padding-top: clamp(28px, 4vh, 40px);
-  max-width: 984px;
-}
-
-.what-closing .cta {
-  margin-top: clamp(28px, 4vh, 40px);
-}
-
-/* Who */
-
-.who-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
-  gap: clamp(32px, 6vw, 96px);
-  align-items: start;
-  max-width: 1200px;
-}
-
-.who-headline {
-  font-family: 'Newsreader', serif;
-  font-weight: 400;
-  font-size: clamp(34px, 5vw, 68px);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  margin: 0;
-  color: var(--cream);
-  max-width: 16ch;
-}
-
-.who-body {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: clamp(24px, 4vh, 40px);
-  max-width: 58ch;
-}
-
-.who-body p {
-  font-size: clamp(16px, 1.5vw, 19px);
-  line-height: 1.7;
-  margin: 0;
-  color: var(--body-who);
-}
-
-.who-founding {
-  font-family: 'Newsreader', serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: clamp(22px, 2.8vw, 32px);
-  line-height: 1.4;
-  margin: 18px 0 0;
-  color: var(--rust);
-  max-width: 58ch;
-}
-
-.who-colleagues {
-  font-size: clamp(16px, 1.5vw, 19px);
-  line-height: 1.7;
-  margin: 18px 0 0;
-  color: var(--body-who);
-  max-width: 58ch;
-}
-
-.who-text .cta {
-  margin-top: clamp(36px, 6vh, 56px);
-}
-
-.who-photo {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.who-portrait {
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  display: block;
-}
-
-.who-caption {
-  font-size: 11.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0;
-}
-
-@media (max-width: 800px) {
-  .who-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Talk */
-
-.talk-main {
-  justify-content: center;
-  padding-bottom: clamp(64px, 12vh, 140px);
-  max-width: 1100px;
-}
-
-.talk-headline {
-  font-family: 'Newsreader', serif;
-  font-weight: 400;
-  font-size: clamp(28px, 4vw, 54px);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  margin: 0;
-  color: var(--cream);
-  max-width: 40ch;
-  text-wrap: balance;
-}
-
-.talk-cta {
-  margin-top: clamp(36px, 6vh, 56px);
-}
-
-/* Footer (shared) */
-
-.site-footer {
-  padding: clamp(24px, 4vh, 40px) var(--side);
-  display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 16px;
-  flex-wrap: wrap;
-  border-top: 1px solid var(--rule-footer);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 20px 2px;
+  color: var(--cream);
+  font-family: inherit;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: left;
 }
+.row .sign { font-weight: 400; font-size: 24px; color: var(--rust); }
+.panel {
+  margin: 0;
+  padding: 2px 2px 26px;
+  list-style: none;
+  font-size: 16px;
+  line-height: 2.1;
+  font-style: italic;
+  opacity: 0.68;
+}
+.panel[hidden] { display: none; }
 
-.site-footer span {
-  font-size: 11.5px;
-  letter-spacing: 0.16em;
+/* Who */
+.who { max-width: 1000px; width: 100%; margin: 0 auto; padding: 120px 0 130px; }
+.eyebrow {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--rust);
 }
-
-/* Home footer keeps its breathing room: no border, single centered line. */
-.page-home .site-footer {
-  border-top: none;
-  justify-content: center;
+.who-grid { display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start; }
+.bio { flex: 1 1 420px; min-width: 0; max-width: 720px; font-size: 18px; line-height: 1.7; }
+.bio .lede { margin: 26px 0 0; font-size: 26px; line-height: 1.4; }
+.bio p { margin: 22px 0 0; }
+.photo {
+  flex: 0 1 300px;
+  min-width: 240px;
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 26px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
 }
